@@ -8,7 +8,6 @@ description = {
    license = "MIT"
 }
 dependencies = {
-  "lua >= 5.3",
   "kong >= 0.14"
 }
 build = {
