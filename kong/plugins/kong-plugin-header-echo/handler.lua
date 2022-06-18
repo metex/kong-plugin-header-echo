@@ -1,12 +1,12 @@
 local CustomHandler = {
   VERSION  = "0.1.0",
   PRIORITY = 2000,
+  echo_string = ""
 }
 
 function CustomHandler:init_worker()
   -- Implement logic for the init_worker phase here (http/stream)
   kong.log("init_worker")
-  self.echo_string = ""
 end
 
 
@@ -29,7 +29,7 @@ end
 function CustomHandler:access(config)
   -- Implement logic for the rewrite phase here (http)
   kong.log("access")
-  self.echo_string = kong.request.get_header(conf.requestHeader)
+  CustomHandler.echo_string = kong.request.get_header(conf.requestHeader)
 end
 
 function CustomHandler:header_filter(config)
@@ -37,7 +37,7 @@ function CustomHandler:header_filter(config)
   kong.log("header_filter")
   kong.log("In EchoHandler:header_filter(). self.echo_string is: ")
 
-  if self.echo_string ~= nil and self.echo_string ~= "" then
+  if CustomHandler.echo_string ~= nil and CustomHandler.echo_string ~= "" then
     kong.response.set_header(conf.responseHeader, self.echo_string)
   end
 end
